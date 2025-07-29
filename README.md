@@ -2,6 +2,8 @@
 
 A modern, responsive restaurant website built with HTML, CSS, and JavaScript. Features an interactive menu, shopping cart, reservation system, and enhanced user experience.
 
+> **Note:** This demo uses Tailwind CSS CDN for simplicity. For production use, follow the Production Setup guide below.
+
 ## ✨ Features
 
 - **Interactive Menu** with search and filtering
@@ -26,6 +28,23 @@ Visit the live website: [Hobo's Gourmet](https://your-username.github.io/hobo-go
 - **Local Storage** - Data persistence
 - **Font Awesome** - Icons
 - **Google Fonts** - Typography
+
+## 🚀 Production Setup
+
+For production deployment, replace the Tailwind CDN with a proper build process:
+
+```bash
+# Install Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer
+
+# Initialize Tailwind
+npx tailwindcss init
+
+# Build CSS
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+```
+
+This will eliminate the CDN warning and improve performance.
 
 ## 📱 Features Overview
 
