@@ -1,8 +1,8 @@
 // Service Worker for Hobo's Gourmet Restaurant
 const CACHE_NAME = 'hobo-gourmet-v1';
 const urlsToCache = [
-  '/',
-  '/hobo.html',
+  './',
+  './hobo.html',
   'https://cdn.tailwindcss.com',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
@@ -25,7 +25,20 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(response => {
         // Return cached version or fetch from network
-        return response || fetch(event.request);
+        if (response) {
+          return response;
+        }
+        
+        // Handle fetch errors gracefully
+        return fetch(event.request).catch(() => {
+          // Return a fallback response for failed requests
+          if (event.request.destination === 'script') {
+            return new Response('console.log("Script load failed");', {
+              headers: { 'Content-Type': 'application/javascript' }
+            });
+          }
+          return new Response('', { status: 404 });
+        });
       })
   );
 });
