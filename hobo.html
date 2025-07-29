@@ -145,6 +145,35 @@
                 font-size: 0.875rem;
                 padding: 0.5rem 1rem;
             }
+            
+            /* Improved mobile cart button */
+            #mobile-cart-btn {
+                cursor: pointer;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            #mobile-cart-btn:active {
+                background-color: rgba(249, 115, 22, 0.1);
+            }
+            
+            /* Better mobile modal interactions */
+            .modal {
+                padding: 1rem;
+            }
+            
+            /* Improved mobile touch targets */
+            .add-to-cart-btn,
+            .view-details-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Mobile menu improvements */
+            #mobile-menu {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
         }
         
         /* Improved accessibility */
@@ -283,9 +312,9 @@
                 <a href="#menu" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500">Menu</a>
                 <a href="#promotions" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500">Promotions</a>
                 <a href="#reservations" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500">Reservations</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500">
+                <button id="mobile-cart-btn" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500">
                     <i class="fas fa-shopping-cart mr-2"></i>Cart (<span id="mobile-cart-count">0</span>)
-                </a>
+                </button>
                 <button class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-orange-500 hover:bg-orange-600">
                     Login
                 </button>
@@ -1167,14 +1196,29 @@
             
             setupCartFunctionality() {
                 const cartBtn = document.getElementById('cart-btn');
+                const mobileCartBtn = document.getElementById('mobile-cart-btn');
                 const cartModal = document.getElementById('cart-modal');
                 const closeCart = document.getElementById('close-cart');
                 const continueShopping = document.getElementById('continue-shopping');
                 
+                // Desktop cart button
                 if (cartBtn && cartModal) {
                     cartBtn.addEventListener('click', () => {
                         cartModal.classList.remove('hidden');
                         this.renderCartItems();
+                    });
+                }
+                
+                // Mobile cart button
+                if (mobileCartBtn && cartModal) {
+                    mobileCartBtn.addEventListener('click', () => {
+                        cartModal.classList.remove('hidden');
+                        this.renderCartItems();
+                        // Close mobile menu when cart opens
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu) {
+                            mobileMenu.classList.add('hidden');
+                        }
                     });
                 }
                 
@@ -1857,6 +1901,12 @@
                     app.updateCartCount();
                     app.saveCartToStorage();
                     app.showNotification(`${dishName} has been added to your cart!`, 'success');
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 });
             });
             
