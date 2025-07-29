@@ -1,0 +1,14 @@
+{
+  "name": "hobo",
+  "version": "1.0.0",
+  "description": "A modern, responsive restaurant website built with HTML, CSS, and JavaScript. Features an interactive menu, shopping cart, reservation system, and enhanced user experience.",
+  "main": "sw.js",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
